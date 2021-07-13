@@ -33,8 +33,8 @@ class EntitiesGrid extends React.Component {
     return (
       <React.Fragment key={entity.key}>
         <StyledTableCell classes={{ body: classes.entityGridTd }} className={classes.tableCell} align="left">{entities[entity.key][0].name}</StyledTableCell>
-        {entitiesTypes[entity.typeKey] && entitiesTypes[entity.typeKey][0] && entitiesTypes[entity.typeKey][0].properties
-        && entitiesTypes[entity.typeKey][0].properties.map(property => (
+        {entitiesTypes[entity.entitiesTypeKey] && entitiesTypes[entity.entitiesTypeKey][0] && entitiesTypes[entity.entitiesTypeKey][0].properties
+        && entitiesTypes[entity.entitiesTypeKey][0].properties.map(property => (
           <>
             {property.trialField
               ? (
@@ -68,7 +68,7 @@ class EntitiesGrid extends React.Component {
           <CustomTooltip
             title="Add entity"
             ariaLabel="Add entity"
-            onClick={() => openAddEntitiesPanel(entity.key)}
+            onClick={() => openAddEntitiesPanel(entity)}
           >
             <PlusIcon/>
           </CustomTooltip>

@@ -58,7 +58,7 @@ const EntityPlanner = ({ client, trial, trialEntities, match, updateLocation, en
             const { dev: newDev, type: newDevType } = changed;
             const locationProp = getEntityLocationProp(newDev, newDevType);
             const changeProps = [{ key: locationProp.key, val: JSON.stringify(locationProp.val) }];
-            return { key: newDev.key, type: "entity", typeKey: newDevType.key, properties: changeProps };
+            return { key: newDev.key, type: "entity", entitiesTypeKey: newDevType.key, properties: changeProps };
         });
 
         // Calling updateLocation one change at a time, otherwise it crushes.

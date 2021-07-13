@@ -61,6 +61,7 @@ const TabPanel = ({ children, value, index, ...other }) => (
 );
 
 class TrialForm extends React.Component {
+
   state = {
     trial: {
       key: this.props.trial ? this.props.trial.key : uuid(),
@@ -270,14 +271,14 @@ class TrialForm extends React.Component {
     return (p !== -1 ? properties[p].invalid : false);
   }
 
-  addEntity = (entity, selectedEntitiesType, properties) => {
+  addEntityToTrial = (entity, selectedEntitiesType, properties) => {
     const { trial } = this.state;
     const entitiesField = trial.status === 'deploy' ? 'deployedEntities' : 'entities';
     //check hireracy of contains entity.
     this.state.trial[entitiesField] = this.state.trial[entitiesField] || [];
     this.state.trial[entitiesField].push({
       key: entity.key,
-      typeKey:selectedEntitiesType,
+      entitiesTypeKey:selectedEntitiesType,
       properties,
     });
     this.setState({ changed: true });
@@ -505,7 +506,7 @@ class TrialForm extends React.Component {
         <TabPanel value={tabValue} index={1}>
           <TrialEntities
             trial={trial}
-            addEntity={this.addEntity}
+            addEntityToTrial={this.addEntityToTrial}
             removeEntity={this.removeEntity}
             updateLocation={this.updateLocation}
             onEntityPropertyChange={this.onEntityPropertyChange}

@@ -42,6 +42,7 @@ class TrialEntities extends React.Component {
     entities: {},
     entitiesTypes: {},
     isLoading: true,
+    parentEntity: {}
   };
 
   componentWillMount() {
@@ -81,7 +82,7 @@ class TrialEntities extends React.Component {
   orderEntities = () => {
     const { trial } = this.props;
     const entitiesField = trial.status === 'deploy' ? 'deployedEntities' : 'entities';
-    this.setState({ update: true, length: trial[entitiesField].length, trialEntities: groupBy(trial[entitiesField], 'typeKey'), entitiesField });
+    this.setState({ update: true, length: trial[entitiesField].length, trialEntities: groupBy(trial[entitiesField], 'entitiesTypeKey'), entitiesField });
   }
 
   changeView = (selectedViewIndex) => {
@@ -89,8 +90,8 @@ class TrialEntities extends React.Component {
     this.props.showFooter(selectedViewIndex !== 3);
   };
 
-  openAddEntitiesPanel = () => {
-    this.setState({ isEntitiesPanelOpen: true });
+  openAddEntitiesPanel = (parentEntity) => {
+    this.setState({ isEntitiesPanelOpen: true,parentEntity });
   }
 
   closeAddEntitiesPanel = () => {
@@ -107,7 +108,7 @@ class TrialEntities extends React.Component {
       theme,
       match,
       trial,
-      addEntity,
+      addEntityToTrial,
       removeEntity,
       onEntityPropertyChange,
       updateLocation,
@@ -120,6 +121,7 @@ class TrialEntities extends React.Component {
       entitiesTypes,
       update,
       isLoading,
+      parentEntity
     } = this.state;
     const experiments = !isLoading
       ? client.readQuery({ query: experimentsQuery }).experimentsWithData
@@ -191,7 +193,8 @@ class TrialEntities extends React.Component {
           onClose={this.closeAddEntitiesPanel}
           match={match}
           theme={theme}
-          addEntity={addEntity}
+          addEntityToTrial={addEntityToTrial}
+          parentEntity ={parentEntity}
           entities={trial[trial.status === 'deploy' ? 'deployedEntities' : 'entities'].map(e => e.key)}
         />}
         <TabPanel value={selectedViewIndex} index={2}>
